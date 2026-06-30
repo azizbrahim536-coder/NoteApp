@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
         private LocalDateTime updatedAt;
 
         public Note() {
-        }   
+        }
 
         public Note(String title, String content) {
             this.title = title;
