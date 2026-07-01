@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Note } from './Entity/Note';
 import { NoteService } from './Services/note.service';
+import { AiService } from './Services/ai.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { NoteService } from './Services/note.service';
 })
 export class AppComponent implements OnInit {
 
+  aiLoadingId: number | null = null;
+  aiSummaries: Record<number, string> = {};
   notes: Note[] = [];
 
   noteForm!: FormGroup;
@@ -24,6 +27,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private noteService: NoteService,
+    private aiService: AiService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -46,6 +50,46 @@ export class AppComponent implements OnInit {
 
     this.loadNotes();
   }
+
+  summarizeNote(note: Note): void {
+  if (note.id === undefined) {
+    return;
+  }
+
+  if (!note.content || !note.content.trim()) {
+    this.errorMessage =
+      'Cette note ne contient aucun contenu à résumer.';
+    return;
+  }
+
+  this.aiLoadingId = note.id;
+  this.errorMessage = '';
+
+  this.aiService.summarizeNote(note).subscribe({
+    next: (response) => {
+      if (note.id !== undefined) {
+        this.aiSummaries[note.id] = response.summary;
+      }
+
+      this.aiLoadingId = null;
+    },
+
+    error: (error) => {
+      console.error('Erreur IA :', error);
+
+      this.errorMessage =
+        error?.error?.message ||
+        'Impossible de générer le résumé avec l’IA.';
+
+      this.aiLoadingId = null;
+    }
+  });
+}
+clearAiSummary(note: Note): void {
+  if (note.id !== undefined) {
+    delete this.aiSummaries[note.id];
+  }
+}
 
   loadNotes(): void {
     this.loading = true;

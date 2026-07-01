@@ -298,12 +298,12 @@ textarea:focus {
 
 .note-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 16px 22px;
   border-top: 1px solid #edf0f4;
   background: #fafbfc;
 }
-
 /* États et messages */
 
 .alert {
@@ -401,3 +401,78 @@ textarea:focus {
     width: 100%;
   }
 }
+
+/* Bouton intelligence artificielle */
+
+.button-ai {
+  color: #6d28d9;
+  background: linear-gradient(
+    135deg,
+    #f3e8ff,
+    #ede9fe
+  );
+}
+
+.button-ai:hover:not(:disabled) {
+  box-shadow: 0 8px 18px rgba(109, 40, 217, 0.16);
+}
+
+.button-ai:disabled {
+  color: #8b5cf6;
+  cursor: wait;
+  opacity: 0.75;
+}
+
+/* Résumé généré */
+
+.ai-summary {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid #ddd6fe;
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      #faf5ff,
+      #f5f3ff
+    );
+}
+
+.ai-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.ai-summary strong {
+  color: #6d28d9;
+  font-size: 14px;
+}
+
+.ai-summary p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.65;
+}
+
+.ai-close-button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  color: #6d28d9;
+  background: #ede9fe;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.ai-close-button:hover {
+  background: #ddd6fe;
+}
+
+
+

@@ -1,0 +1,5 @@
+service.ia/.env
+service.ia/venv/
+service.ia/__pycache__/
+*.pyc
+*.pyc

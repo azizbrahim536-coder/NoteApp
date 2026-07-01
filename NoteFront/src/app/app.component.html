@@ -214,10 +214,53 @@
                 'Cette note ne contient pas de description.'
               }}
             </p>
+            <div
+  *ngIf="
+    note.id !== undefined &&
+    aiSummaries[note.id]
+  "
+  class="ai-summary"
+>
+  <div class="ai-summary-header">
+    <strong>✨ Résumé généré par l’IA</strong>
+
+    <button
+      type="button"
+      class="ai-close-button"
+      (click)="clearAiSummary(note)"
+      title="Masquer le résumé"
+    >
+      ×
+    </button>
+  </div>
+
+  <p>
+    {{
+      note.id !== undefined
+        ? aiSummaries[note.id]
+        : ''
+    }}
+  </p>
+</div>
 
           </div>
 
           <div class="note-actions">
+
+            <button
+  type="button"
+  class="button button-ai"
+  [disabled]="aiLoadingId === note.id"
+  (click)="summarizeNote(note)"
+>
+  <span *ngIf="aiLoadingId !== note.id">
+    ✨ Résumer avec l’IA
+  </span>
+
+  <span *ngIf="aiLoadingId === note.id">
+    Génération...
+  </span>
+</button>
 
             <button
               type="button"
